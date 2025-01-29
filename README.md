@@ -41,7 +41,8 @@ Este projeto foi idealizado como uma oportunidade de praticar conceitos fundamen
 2. Implementação de validações
 3. Criação dos testes
 4. Criação da interface visual
-5. Adição do banco de dados não relacional.
+5. Adição do banco de dados relacional.
+6. Transformar em API
 
 
 ## 🌟 Contribuições  
