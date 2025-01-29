@@ -27,3 +27,13 @@ bin/
 
 ### Mac OS ###
 .DS_Store
+
+### IntelliJ IDEA ###
+.idea/
+*.iml
+
+### Conector  ###
+conector/
+
+### Outros arquivos/pastas específicos ###
+dirigence
