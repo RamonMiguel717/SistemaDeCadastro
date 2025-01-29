@@ -28,7 +28,7 @@ public class BancoDeDados {
         }
     }
 
-    public void salvarCliente(Cliente cliente) throws SQLException {
+    public void salvarCliente(Cliente cliente){
         String sql = "INSERT INTO clientes (cpf, nome, email, data_nascimento, senha) VALUES (?,?,?,?,?)";
         try (Connection connection = DataBaseConnection.getConnection();
              PreparedStatement statement = connection.prepareStatement(sql)) {
@@ -65,7 +65,6 @@ public class BancoDeDados {
         }
     }
 
-    //FIXME adaptar essa função para utilizar da função "BuscarCliente"
         public Cliente buscarClientePorCpf(String cpf) throws SQLException {
 
             String sql = "SELECT * FROM clientes WHERE cpf = ?";
