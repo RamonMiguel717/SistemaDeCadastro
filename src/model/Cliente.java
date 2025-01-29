@@ -8,20 +8,23 @@ public class Cliente {
     private String nome;
     private String senha;
     private String email;
-    private int idade;
     private String cpf;
     private String dataNascimento;
 
     private final List<String> errors = new ArrayList<>();
 
-    public Cliente(String nome, String senha, String email, int idade, String cpf, String dataNascimento) {
+    public Cliente(String nome, String senha, String email, String cpf, String dataNascimento) {
         this.nome = nome;
         this.senha = senha;
         this.email = email;
-        this.idade = idade;
         this.cpf = cpf;
         this.dataNascimento = dataNascimento;
-
+    }
+    public Cliente(String nome, String email, String cpf, String dataNascimento) {
+        this.nome = nome;
+        this.email = email;
+        this.cpf = cpf;
+        this.dataNascimento = dataNascimento;
     }
 
     public String getDataNascimento() {
@@ -48,13 +51,6 @@ public class Cliente {
         this.cpf = cpf;
     }
 
-    public int getIdade() {
-        return idade;
-    }
-
-    public void setIdade(int idade) {
-        this.idade = idade;
-    }
 
     public String getSenha() {
         return senha;
@@ -71,4 +67,5 @@ public class Cliente {
     public void setEmail(String email) {
         this.email = email;
     }
+
 }

@@ -1,6 +1,7 @@
 package controller;
 
 import model.Cliente;
+import repositorio.BancoDeDados;
 import validation.FormatValidator;
 
 import java.util.Scanner;
@@ -13,35 +14,48 @@ public class InterfaceCadastro {
         String resposta = entrada.nextLine();
 
         switch (resposta.toLowerCase()) {
-            case "s": AcessoConta();
+            case "s":
+                AcessoConta();
+                break;
             case "n":
+                CadastrarNovaConta();
+                break;
+            default:
+                System.out.println("Opção inválida!");
+                apresentacao();
+                break;
         }
     }
-    public void AcessoConta(){
-
+    protected void AcessoConta() {
         try {
             System.out.println("Olá! Seja bem-vindo.");
             System.out.print("Digite seu CPF: ");
             String cpf = entrada.nextLine();
             FormatValidator.validarCPF(cpf);
 
-            System.out.print("Digite seu email: ");
-            String email = entrada.nextLine();
-            FormatValidator.validarEmail(email);
-
             System.out.print("Digite sua senha: ");
             String senha = entrada.nextLine();
-            FormatValidator.validarSenha(senha, "", email);
 
-            System.out.println("Seja bem vindo!");
+            // Consulta no banco de dados
+            BancoDeDados banco = new BancoDeDados();
+            banco.conectar();
+            Cliente cliente = banco.buscarClientePorCpf(cpf);
+
+            if (cliente != null && cliente.getSenha().equals(senha)) {
+                System.out.println("Seja bem-vindo, " + cliente.getNome() + "!");
+            } else {
+                System.out.println("CPF ou senha inválidos!");
+            }
+
+            banco.desconectar();
+
         } catch (Exception e) {
-            System.out.println("Erro ao entrar:: " + e.getMessage());
+            System.out.println("Erro ao entrar: " + e.getMessage());
         }
     }
-    public void CadastrarNovaConta(){
 
+    public void CadastrarNovaConta() {
         System.out.println("Insira as informações requisitadas:");
-
         try {
             System.out.println("Insira seu nome completo: ");
             String nome = entrada.nextLine();
@@ -61,20 +75,29 @@ public class InterfaceCadastro {
 
             System.out.println("Insira sua senha:");
             String senha = entrada.nextLine();
-            FormatValidator.validarSenha(senha,nome,email);
+            FormatValidator.validarSenha(senha, nome, email);
 
             System.out.println("Confirme sua senha: ");
             String confirmacao = entrada.nextLine();
-            while (!confirmacao.matches(senha)){
+            while (!confirmacao.equals(senha)) { // Corrigindo a comparação de senhas
                 System.out.println("Senha incorreta, tente novamente");
                 confirmacao = entrada.nextLine();
             }
 
+            // Cria o objeto cliente
+            Cliente novoCliente = new Cliente(nome, senha, email, cpf, data);
 
+            // Salva o cliente no banco de dados
+            BancoDeDados banco = new BancoDeDados();
+            banco.conectar();
+            banco.salvarCliente(novoCliente);
+            banco.desconectar();
 
-        }catch (Exception e){
+            System.out.println("Cadastro realizado com sucesso!");
+
+        } catch (Exception e) {
             System.out.println("Erro ao cadastrar: " + e.getMessage());
         }
-        Cliente List<Link>  = new Cliente[];
     }
+
 }
